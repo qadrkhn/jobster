@@ -6,7 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{
+      v7_startTransition: true,
+    }}>
       <Routes>
         <Route path='/' element={ <Dashboard /> }></Route>
         <Route path='landing' element={ <Landing /> }></Route>

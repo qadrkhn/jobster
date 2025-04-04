@@ -1,0 +1,26 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+charset = utf-8
+
+# Docstrings and comments use max_line_length = 79
+[*.py]
+max_line_length = 88
+
+# Settings for Markdown files
+[*.md]
+max_line_length = 80
+indent_size = 2
+
+# YAML files use 2 spaces for indentation
+[*.yml]
+indent_size = 2
+
+# Shared settings for all text files (e.g., .txt)
+[docs/**.txt]
+max_line_length = 79

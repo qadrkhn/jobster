@@ -29,6 +29,27 @@ export const registerUser = createAsyncThunk(
     }
 );
 
+// Update user
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (user, thunkAPI) => {
+    try {
+      const response = await customFetch.patch('/auth/updateUser/', user, {
+        headers: {
+          Authorization : `Bearer ${thunkAPI.getState().user.user.token}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+        if (error.response.status === 401) {
+          thunkAPI.dispatch(logoutUser());
+          return thunkAPI.rejectWithValue('Unauthorized. Logging out .....');
+        }
+        return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const initialState = {
     isLoading: false,
     isSideBarOpen: false,
@@ -45,7 +66,7 @@ const userSlice = createSlice({
       },
       logoutUser: (state) => {
         state.user = null;
-        state.isSideBarOpen= false;
+        state.isSideBarOpen = false;
         removeUserFromLocalStorage();
       }
     },
@@ -79,6 +100,22 @@ const userSlice = createSlice({
             toast.success(`Welcome back ${user.name}`);
         })
         .addCase(loginUser.rejected, (state, { payload }) => {
+            state.isLoading = false;
+            state.error = payload;
+            if (payload) {toast.error(payload);} else {toast.error('Something went wrong. Please try again later.');}
+        })
+        // Update user
+        .addCase(updateUser.pending, (state) => {
+          state.isLoading = true;
+        })
+        .addCase(updateUser.fulfilled, (state, { payload }) => {
+            state.isLoading = false;
+            const { user } = payload;
+            state.user = user;
+            addUserToLocalStorage(user);
+            toast.success(`User Updated`);
+        })
+        .addCase(updateUser.rejected, (state, { payload }) => {
             state.isLoading = false;
             state.error = payload;
             if (payload) {toast.error(payload);} else {toast.error('Something went wrong. Please try again later.');}

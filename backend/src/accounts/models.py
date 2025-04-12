@@ -8,24 +8,6 @@ from django.contrib.auth.models import (
 from django.db.models import JSONField
 from django.core.validators import RegexValidator
 
-# for login this is needed
-# {
-#     "email": "john@gmail.com",
-#     "lastName": "Smith",
-#     "location": "Kiev",
-#     "name": "John",
-#     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjU5ZWMwNmJlZWEzMWZjMTRiZGI4YTYiLCJuYW1lIjoiSm9obiIsImlhdCI6MTc0Mzc3MTk0NSwiZXhwIjoxNzQzODU4MzQ1fQ._tR_eJN1xig0WBQ1S81qvKET1cNlGUVFEZxjdiObJcs"
-# }
-
-# register success response
-# {
-#     "email": "tesuSEr@gmail.com",
-#     "lastName": "lastName",
-#     "location": "my city",
-#     "name": "testUser",
-#     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2VmZGEzODZjZGIyY2VlZTk2ODI2ODMiLCJuYW1lIjoidGVzdFVzZXIiLCJpYXQiOjE3NDM3NzIyMTcsImV4cCI6MTc0Mzg1ODYxN30.5QkjysT1ykRwtNEJXW9SGrppS8e16yddRQ0zr5sY2fY"
-# }
-
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
         if not email:
@@ -86,7 +68,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=60, unique=True, verbose_name="Email",)
     last_name = models.CharField(max_length=50, verbose_name="Lastname", default='lastName')
     location = models.CharField(max_length=50, verbose_name="Location", default='my city')
-    
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

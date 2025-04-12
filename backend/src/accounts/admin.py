@@ -4,14 +4,14 @@ from accounts.models import Account
 
 class AccountAdmin(UserAdmin):
     model = Account
-    list_display = ('email', 'name', 'is_active', 'is_staff', 'is_superuser', 'date_joined', 'last_login')
+    list_display = ('email', 'name', 'location', 'is_active', 'is_staff', 'is_superuser', 'date_joined', 'last_login')
     list_filter = ('is_active', 'is_staff', 'is_superuser')
-    search_fields = ('email', 'name')
+    search_fields = ('email', 'name', 'location')
     ordering = ('-date_joined',)
 
     # Fields for the detail page (add and change views)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('email', 'password', 'location')}),
         ('Personal info', {'fields': ('name',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined',)}),
@@ -21,7 +21,7 @@ class AccountAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'name', 'is_active', 'is_staff', 'is_superuser')
+            'fields': ('email', 'location', 'password1', 'password2', 'name', 'is_active', 'is_staff', 'is_superuser')
         }),
     )
 

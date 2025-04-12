@@ -10,6 +10,7 @@ const FormRow = ({ name, value, type, labelText, handleChange }) => {
                 name={ name }
                 value={ value }
                 onChange={ handleChange }
+                id={name}
             />
         </div>
     );
